@@ -10,7 +10,7 @@ public class Graph implements IGraph {
     private int size;
 
     public Graph() {
-        this.airports = new HashMap();
+        this.airports = new HashMap<>();
         this.start = null;
         this.size = 0;
     }
