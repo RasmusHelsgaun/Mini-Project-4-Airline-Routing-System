@@ -5,12 +5,14 @@ import java.util.Map;
 
 public class Graph implements IGraph {
 
-    Map<String, Airport> airports;
-    Airport start;
+    private Map<String, Airport> airports;
+    private Airport start;
+    private int size;
 
     public Graph() {
         this.airports = new HashMap();
         this.start = null;
+        this.size = 0;
     }
 
     @Override
@@ -35,6 +37,7 @@ public class Graph implements IGraph {
 
         final Route newRoute = new Route(from, to, airline, distance, time);
         from.addRoute(newRoute);
+        size++;
     }
 
     /**
@@ -46,5 +49,12 @@ public class Graph implements IGraph {
 
 	public Airport getAirport(String string) {
 		return this.airports.get(string);
-	}
+    }
+    
+    /**
+     * @return the size
+     */
+    public int getSize() {
+        return size;
+    }
 }
