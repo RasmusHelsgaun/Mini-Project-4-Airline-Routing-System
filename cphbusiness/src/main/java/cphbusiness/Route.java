@@ -8,8 +8,7 @@ public class Route {
     private float time;
     private boolean visited = false;
 
-    public Route(Airport from, Airport to, 
-    String airlineCode, float distance, float time) {
+    public Route(Airport from, Airport to, String airlineCode, float distance, float time) {
         this.from = from;
         this.to = to;
         this.airlineCode = airlineCode;
@@ -25,15 +24,31 @@ public class Route {
         return to;
     }
 
-    public Airport getAirlineCode() {
+    public String getAirlineCode() {
         return airlineCode;
     }
 
-    public Airport getVisited() {
+    public float getDistance() {
+        return distance;
+    }
+
+    public float getTime() {
+        return time;
+    }
+
+    public boolean isVisited() {
         return visited;
     }
 
-    public static void main(String[] args) {
-        System.out.println( "Hello World!" );
+    public void setIsVisited(){
+        this.visited = true;
     }
+
+    @Override
+    public String toString() {
+        return "{" + " from='" + getFrom() + "'" + ", to='" + getTo() + "'" + ", airlineCode='" + getAirlineCode() + "'"
+                + ", distance='" + getDistance() + "'" + ", time='" + getTime() + "'" + ", visited='" + isVisited()
+                + "'" + "}";
+    }
+
 }

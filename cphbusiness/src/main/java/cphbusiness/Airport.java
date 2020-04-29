@@ -16,11 +16,29 @@ public class Airport {
         routes.add(route);
     }
 
-    public List<Route> getEdges() {
+    public List<Route> getRoutes() {
         return routes;
     }
 
     public String getId() {
         return code;
     }
+
+    public Airport() {
+    }
+
+    public Airport(String code, List<Route> routes) {
+        this.code = code;
+        this.routes = routes;
+    }
+
+    public String getCode() {
+        return this.code;
+    }
+
+    @Override
+    public String toString() {
+        return "{" + " code='" + getCode() + "'" + "}";
+    }
+
 }
