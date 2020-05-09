@@ -113,12 +113,13 @@ public class App {
             } else {
                 Airport to = path.get(0).getTo();
                 System.out.println("Shortest path from " + start.getCode() + " to " + END + " is " + to.getShortest()
-                        + " " + fieldGetterPackage.metric); 
+                        + " " + fieldGetterPackage.metric);
                 Collections.reverse(path);
                 printPath(path);
             }
         }
 
+        System.out.println("----------------Widest coverage (Prim's (lazy MST))----------------");
         graph = createGraph();
         Airport start = graph.getAirport(START);
 
@@ -128,13 +129,19 @@ public class App {
             Prims ps = new Prims();
             List<Route> tree = ps.getMST(start, airlineCode);
             int span = tree.size();
-            if(span > bestTree.size()){
+            if (span > bestTree.size()) {
                 bestTree = tree;
             }
         }
 
         String bestAirlineCode = bestTree.get(0).getAirlineCode();
-        System.out.println("Airline with biggest MST is " + bestAirlineCode + " with " + ( bestTree.size() + 1) + " covered Airports!");
+        float totalDistance = 0;
+        for (Route route : bestTree) {
+            totalDistance += route.getDistance();
+        }
+        System.out.println("Airline with biggest MST is " + bestAirlineCode + " with " + (bestTree.size() + 1)
+                + " covered Airports and a total distance of " + totalDistance + " km!");
+
     }
 
     private static void printPath(Collection<Route> path) {
