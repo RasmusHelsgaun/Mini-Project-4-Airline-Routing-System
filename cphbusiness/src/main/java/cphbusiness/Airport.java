@@ -3,13 +3,17 @@ package cphbusiness;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Airport {
+public class Airport implements Comparable<Airport> {
     private String code;
     private List<Route> routes;
+    private Route via;
+    private float shortest;
 
     public Airport(String code) {
         this.code = code;
         this.routes = new ArrayList<>();
+        this.via = null;
+        this.shortest = Float.POSITIVE_INFINITY;
     }
 
     public void addRoute(Route route) {
@@ -39,6 +43,33 @@ public class Airport {
     @Override
     public String toString() {
         return "{" + " code='" + getCode() + "'" + "}";
+    }
+
+    public Route getVia() {
+        return this.via;
+    }
+
+    public void setVia(Route via) {
+        this.via = via;
+    }
+
+    public float getShortest() {
+        return this.shortest;
+    }
+
+    public void setShortest(float shortest) {
+        this.shortest = shortest;
+    }
+
+    @Override
+    public int compareTo(Airport o) {
+        if (this.shortest < o.shortest) {
+            return -1;
+        } else if (this.shortest > o.shortest) {
+            return 1;
+        } else {
+            return 0;
+        }
     }
 
 }

@@ -4,12 +4,17 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.Collection;
+import java.util.Collections;
+import java.util.List;
 
 /**
  * Hello world!
  *
  */
 public class App {
+
+    private final static String START = "AER";
+    private final static String END = "SIN";
 
     public static Graph createGraph() {
         String csvFile = "./data/routes.csv";
@@ -41,13 +46,14 @@ public class App {
         Search[] searchAlgs = { new DFS(), new BFS(graph.getSize()) };
 
         for (Search search : searchAlgs) {
-            if(graph == null) graph = createGraph();
-            
-            System.out.println("__________________________________________________");
-            System.out.println("Using alg: " + search.getClass().getSimpleName());
-            Airport start = graph.getAirport("AER");
+            if (graph == null)
+                graph = createGraph();
 
-            Collection<Route> path = search.findSingleAirlineRoute(start, "SIN");
+            System.out.println("__________________________________________________");
+            Airport start = graph.getAirport(START);
+            System.out.println("Using alg: " + search.getClass().getSimpleName());
+
+            Collection<Route> path = search.findSingleAirlineRoute(start, END);
 
             if (path == null) {
                 System.err.println("No Path To Destination With a single airline!");
@@ -67,17 +73,57 @@ public class App {
 
                 System.out.println("Time Taken: " + time + " hr - Distance: " + distance + " km");
 
-                System.out.println("-------PATH--------");
-                System.out.print(first.getFrom().getCode());
-                for (Route route : path) {
-                    System.out.print(" -> " + route.getTo().getCode());
-                }
-                System.out.println();
+                printPath(path);
 
             }
             graph = null;
         }
 
+        // Path Algs
+        graph = createGraph();
+        Airport start = graph.getAirport(START);
+
+        class FieldGetterPackage {
+            String fieldName;
+            FieldGetter fieldGetter;
+            String metric;
+
+            public FieldGetterPackage(String fieldName, FieldGetter fieldGetter, String metric) {
+                this.fieldName = fieldName;
+                this.fieldGetter = fieldGetter;
+                this.metric = metric;
+            }
+        }
+
+        FieldGetterPackage[] fieldGetterPackages = {
+                new FieldGetterPackage("Distance", (Route r, String end) -> r.getDistance(), "km"),
+                new FieldGetterPackage("Time", (Route r, String end) -> !r.getTo().getCode().equals(end) ? r.getTime() + 1 : r.getTime(), "hrs") };
+
+        for (FieldGetterPackage fieldGetterPackage : fieldGetterPackages) {
+            System.out.println("----------------Shortest Path " + fieldGetterPackage.fieldName + "----------------");
+            Dijkstra ds = new Dijkstra();
+
+            List<Route> path = ds.findShortestPath(start, END, fieldGetterPackage.fieldGetter);
+            if (path == null) {
+                System.err.println("No Path To Destination!");
+            } else {
+                Airport to = path.get(0).getTo();
+                System.out.println("Shortest path from " + start.getCode() + " to " + END + " is " + to.getShortest()
+                        + " " + fieldGetterPackage.metric);
+                Collections.reverse(path);
+                printPath(path);
+            }
+        }
+
+    }
+
+    private static void printPath(Collection<Route> path) {
+        System.out.println("-------PATH--------");
+        System.out.print(path.iterator().next().getFrom().getCode());
+        for (Route route : path) {
+            System.out.print(" -> " + route.getTo().getCode());
+        }
+        System.out.println();
     }
 
 }
