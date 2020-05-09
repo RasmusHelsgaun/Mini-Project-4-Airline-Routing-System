@@ -8,12 +8,14 @@ public class Airport implements Comparable<Airport> {
     private List<Route> routes;
     private Route via;
     private float shortest;
+    private boolean visited;
 
     public Airport(String code) {
         this.code = code;
         this.routes = new ArrayList<>();
         this.via = null;
         this.shortest = Float.POSITIVE_INFINITY;
+        this.visited = false;
     }
 
     public void addRoute(Route route) {
@@ -60,6 +62,15 @@ public class Airport implements Comparable<Airport> {
     public void setShortest(float shortest) {
         this.shortest = shortest;
     }
+
+    public boolean isVisited() {
+        return this.visited;
+    }
+
+    public void setIsVisited() {
+        this.visited = true;
+    }
+
 
     @Override
     public int compareTo(Airport o) {

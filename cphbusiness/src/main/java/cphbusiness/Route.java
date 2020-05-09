@@ -1,6 +1,6 @@
 package cphbusiness;
 
-public class Route {
+public class Route implements Comparable<Route>{
     private Airport from;
     private Airport to;
     private String airlineCode;
@@ -49,6 +49,17 @@ public class Route {
         return "{" + " from='" + getFrom() + "'" + ", to='" + getTo() + "'" + ", airlineCode='" + getAirlineCode() + "'"
                 + ", distance='" + getDistance() + "'" + ", time='" + getTime() + "'" + ", visited='" + isVisited()
                 + "'" + "}";
+    }
+
+    @Override
+    public int compareTo(Route r) {
+        if (this.distance < r.distance) {
+            return -1;
+        } else if (this.distance > r.distance) {
+            return 1;
+        } else {
+            return 0;
+        }
     }
 
 }

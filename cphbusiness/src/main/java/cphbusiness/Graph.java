@@ -1,16 +1,20 @@
 package cphbusiness;
 
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 
 public class Graph implements IGraph {
 
     private Map<String, Airport> airports;
+    private Set<String> airlineCodes;
     private Airport start;
     private int size;
 
     public Graph() {
         this.airports = new HashMap<>();
+        this.airlineCodes = new HashSet<>();
         this.start = null;
         this.size = 0;
     }
@@ -34,7 +38,7 @@ public class Graph implements IGraph {
         if(this.start == null){
             this.start = from;
         }
-
+        this.airlineCodes.add(airline);
         final Route newRoute = new Route(from, to, airline, distance, time);
         from.addRoute(newRoute);
         size++;
@@ -49,6 +53,10 @@ public class Graph implements IGraph {
 
 	public Airport getAirport(String string) {
 		return this.airports.get(string);
+    }
+
+    public Set<String> getAirlineCodes() {
+        return airlineCodes;
     }
     
     /**

@@ -3,6 +3,7 @@ package cphbusiness;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
@@ -80,8 +81,6 @@ public class App {
         }
 
         // Path Algs
-        graph = createGraph();
-        Airport start = graph.getAirport(START);
 
         class FieldGetterPackage {
             String fieldName;
@@ -97,9 +96,14 @@ public class App {
 
         FieldGetterPackage[] fieldGetterPackages = {
                 new FieldGetterPackage("Distance", (Route r, String end) -> r.getDistance(), "km"),
-                new FieldGetterPackage("Time", (Route r, String end) -> !r.getTo().getCode().equals(end) ? r.getTime() + 1 : r.getTime(), "hrs") };
+                new FieldGetterPackage("Time",
+                        (Route r, String end) -> !r.getTo().getCode().equals(end) ? r.getTime() + 1 : r.getTime(),
+                        "hrs") };
 
         for (FieldGetterPackage fieldGetterPackage : fieldGetterPackages) {
+            graph = createGraph();
+            Airport start = graph.getAirport(START);
+
             System.out.println("----------------Shortest Path " + fieldGetterPackage.fieldName + "----------------");
             Dijkstra ds = new Dijkstra();
 
@@ -109,12 +113,28 @@ public class App {
             } else {
                 Airport to = path.get(0).getTo();
                 System.out.println("Shortest path from " + start.getCode() + " to " + END + " is " + to.getShortest()
-                        + " " + fieldGetterPackage.metric);
+                        + " " + fieldGetterPackage.metric); 
                 Collections.reverse(path);
                 printPath(path);
             }
         }
 
+        graph = createGraph();
+        Airport start = graph.getAirport(START);
+
+        List<Route> bestTree = new ArrayList<>();
+
+        for (String airlineCode : graph.getAirlineCodes()) {
+            Prims ps = new Prims();
+            List<Route> tree = ps.getMST(start, airlineCode);
+            int span = tree.size();
+            if(span > bestTree.size()){
+                bestTree = tree;
+            }
+        }
+
+        String bestAirlineCode = bestTree.get(0).getAirlineCode();
+        System.out.println("Airline with biggest MST is " + bestAirlineCode + " with " + ( bestTree.size() + 1) + " covered Airports!");
     }
 
     private static void printPath(Collection<Route> path) {
