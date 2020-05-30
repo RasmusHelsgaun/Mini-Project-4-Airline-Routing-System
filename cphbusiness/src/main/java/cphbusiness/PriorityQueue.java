@@ -10,18 +10,17 @@ public class PriorityQueue<T extends Comparable<T>> implements IPriorityQueue<T>
 
     @Override
     public void add(T obj) {
-        
         pq.set(++N, obj);
         swim(N);
     }
 
     @Override
     public T poll() {
-        T max = pq.get(1); 
+        T min = pq.get(1); 
         swap(1, N--);
         pq.set(N + 1, null);
         sink(1);
-        return max;
+        return min;
     }
 
     @Override
@@ -36,7 +35,7 @@ public class PriorityQueue<T extends Comparable<T>> implements IPriorityQueue<T>
 
     private void swim(int i) {
         int iParent = parent(i);
-        while (i > 1 && less(iParent, i)) {
+        while (i > 1 && bigger(iParent, i)) {
             swap(iParent, i);
             i = iParent;
         }
@@ -47,11 +46,11 @@ public class PriorityQueue<T extends Comparable<T>> implements IPriorityQueue<T>
             int pointer = leftChild(i);
             int iRight = rightChild(i);
 
-            if (pointer < N && less(pointer, iRight)) {
+            if (pointer < N && bigger(pointer, iRight)) {
                 pointer++; // moves pointer to right sibling
             }
 
-            if (!less(i, pointer))
+            if (!bigger(i, pointer))
                 break;
 
             swap(i, pointer);
@@ -60,8 +59,8 @@ public class PriorityQueue<T extends Comparable<T>> implements IPriorityQueue<T>
         }
     }
 
-    private boolean less(int i, int j) {
-        return pq.get(i).compareTo(pq.get(j)) < 0;
+    private boolean bigger(int i, int j) {
+        return pq.get(i).compareTo(pq.get(j)) > 0;
     }
 
     private void swap(int i, int j) {

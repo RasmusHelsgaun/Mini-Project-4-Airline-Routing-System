@@ -1,5 +1,7 @@
 package cphbusiness;
 
+import java.util.List;
+import java.util.ArrayList;
 
 public class Prims {
     private PriorityQueue<Route> pq;
@@ -8,8 +10,8 @@ public class Prims {
         this.pq = new PriorityQueue<>();
     }
 
-    public IArrayList<Route> getMST(Airport start, String airlineCode) {
-        IArrayList<Route> tree = new ArrayList<>();
+    public List<Route> getMST(Airport start, String airlineCode) {
+        List<Route> tree = new ArrayList<>();
         Airport cur = start;
         cur.setIsVisited();
         do {

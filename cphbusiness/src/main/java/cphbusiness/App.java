@@ -3,11 +3,15 @@ package cphbusiness;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
-import java.util.ArrayList;
 
+/**
+ * Hello world!
+ *
+ */
 public class App {
 
     private final static String START = "AER";
@@ -103,16 +107,15 @@ public class App {
             System.out.println("----------------Shortest Path " + fieldGetterPackage.fieldName + "----------------");
             Dijkstra ds = new Dijkstra();
 
-            List<Route> path = ds.findShortestPath(start, END, fieldGetterPackage.fieldGetter).getJavaImplementation();
+            List<Route> path = ds.findShortestPath(start, END, fieldGetterPackage.fieldGetter);
             if (path == null) {
                 System.err.println("No Path To Destination!");
             } else {
                 Airport to = path.get(0).getTo();
                 System.out.println("Shortest path from " + start.getCode() + " to " + END + " is " + to.getShortest()
                         + " " + fieldGetterPackage.metric);
-                List javaList = path;
-                Collections.reverse(javaList);
-                printPath(javaList);
+                Collections.reverse(path);
+                printPath(path);
             }
         }
 
@@ -124,7 +127,7 @@ public class App {
 
         for (String airlineCode : graph.getAirlineCodes()) {
             Prims ps = new Prims();
-            List<Route> tree = ps.getMST(start, airlineCode).getJavaImplementation();
+            List<Route> tree = ps.getMST(start, airlineCode);
             int span = tree.size();
             if (span > bestTree.size()) {
                 bestTree = tree;
