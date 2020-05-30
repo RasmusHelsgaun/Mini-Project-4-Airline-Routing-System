@@ -11,6 +11,7 @@ public class Airport implements Comparable<Airport> {
     private boolean visited;
     private double latitude;
     private double longitude;
+    private double heuristic; 
 
     public Airport(String code, double latitude, double longitude) {
         this.code = code;
@@ -20,6 +21,7 @@ public class Airport implements Comparable<Airport> {
         this.visited = false;
         this.latitude = latitude;
         this.longitude = longitude;
+        this.heuristic = 0;
     }
 
     public Airport(String code) {
@@ -87,11 +89,24 @@ public class Airport implements Comparable<Airport> {
         this.visited = true;
     }
 
+    public void setHeuristic(double heuristic) {
+        this.heuristic = heuristic;
+    }
+
+    public double getHeuristic() {
+        return heuristic;
+    }
+    
+
+    public double heuristifiedShortest(){
+        return shortest + heuristic;
+    }
+
     @Override
     public int compareTo(Airport o) {
-        if (this.shortest < o.shortest) {
+        if (heuristifiedShortest() < o.heuristifiedShortest()) {
             return -1;
-        } else if (this.shortest > o.shortest) {
+        } else if (heuristifiedShortest() > o.heuristifiedShortest()) {
             return 1;
         } else {
             return 0;

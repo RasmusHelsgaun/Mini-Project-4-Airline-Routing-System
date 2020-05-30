@@ -15,7 +15,7 @@ import java.util.List;
 public class App {
 
     private final static String START = "AER";
-    private final static String END = "SIN";
+    private final static String END = "CTU";
 
     public static Graph createGraph() {
         Graph graph = new Graph();
@@ -38,9 +38,8 @@ public class App {
             e.printStackTrace();
         }
 
-
         String routesFile = "./data/routes.csv";
-        
+
         line = "";
         i = 0;
         try (BufferedReader br = new BufferedReader(new FileReader(routesFile))) {
@@ -128,7 +127,8 @@ public class App {
             System.out.println("----------------Shortest Path " + fieldGetterPackage.fieldName + "----------------");
             Dijkstra ds = new Dijkstra();
 
-            List<Route> path = ds.findShortestPath(start, END, fieldGetterPackage.fieldGetter);
+            Airport endAirport = graph.getAirport(END);
+            List<Route> path = ds.findShortestPath(start, endAirport, fieldGetterPackage.fieldGetter);
             if (path == null) {
                 System.err.println("No Path To Destination!");
             } else {
@@ -140,9 +140,27 @@ public class App {
             }
         }
 
-        System.out.println("----------------Widest coverage (Prim's (lazy MST))----------------");
         graph = createGraph();
         Airport start = graph.getAirport(START);
+
+        System.out.println("----------------Shortest Path A* (Distance)----------------");
+        AStar as = new AStar();
+
+        Airport endAirport = graph.getAirport(END);
+        List<Route> path = as.findShortestPath(start, endAirport, (Route r, String end) -> r.getDistance());
+        if (path == null) {
+            System.err.println("No Path To Destination!");
+        } else {
+            Airport to = path.get(0).getTo();
+            System.out.println(
+                    "Shortest path from " + start.getCode() + " to " + END + " is " + to.getShortest() + " " + "km");
+            Collections.reverse(path);
+            printPath(path);
+        }
+
+        System.out.println("----------------Widest coverage (Prim's (lazy MST))----------------");
+        graph = createGraph();
+        start = graph.getAirport(START);
 
         List<Route> bestTree = new ArrayList<>();
 
