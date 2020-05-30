@@ -1,8 +1,5 @@
 package cphbusiness;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.PriorityQueue;
 
 public class Dijkstra {
     private PriorityQueue<Airport> pq;
@@ -11,7 +8,7 @@ public class Dijkstra {
         this.pq = new PriorityQueue<>();
     }
 
-    public List<Route> findShortestPath(Airport start, String end, FieldGetter fieldGetter) {
+    public IArrayList<Route> findShortestPath(Airport start, String end, FieldGetter fieldGetter) {
         start.setShortest(0);
         Airport cur = start;
         while (!cur.getCode().equals(end)) {
@@ -29,7 +26,7 @@ public class Dijkstra {
             if(cur == null) return null;
         }
 
-        List<Route> path = new ArrayList<Route>();
+        IArrayList<Route> path = new ArrayList<Route>();
         
         while(!cur.equals(start)){
             Route via = cur.getVia();
