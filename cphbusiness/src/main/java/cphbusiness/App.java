@@ -18,11 +18,32 @@ public class App {
     private final static String END = "SIN";
 
     public static Graph createGraph() {
-        String csvFile = "./data/routes.csv";
-        String line = "";
         Graph graph = new Graph();
+
+        String airportsFile = "./data/airports.csv";
+        String line = "";
         int i = 0;
-        try (BufferedReader br = new BufferedReader(new FileReader(csvFile))) {
+        try (BufferedReader br = new BufferedReader(new FileReader(airportsFile))) {
+            while ((line = br.readLine()) != null) {
+                if (i++ == 0)
+                    continue;
+                String[] airport = line.split(";");
+                String code = airport[0];
+                double lat = Double.parseDouble(airport[4]);
+                double lng = Double.parseDouble(airport[5]);
+                graph.addAirport(code, lat, lng);
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+
+        String routesFile = "./data/routes.csv";
+        
+        line = "";
+        i = 0;
+        try (BufferedReader br = new BufferedReader(new FileReader(routesFile))) {
             while ((line = br.readLine()) != null) {
                 if (i++ == 0)
                     continue;

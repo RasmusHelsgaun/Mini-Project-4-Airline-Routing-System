@@ -3,14 +3,10 @@ package cphbusiness;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Queue;
 import java.util.Set;
-import java.util.Stack;
-import java.util.concurrent.ArrayBlockingQueue;
 
 
 public abstract class Search {
-    
 
     protected Stack<Route> stack;
     protected Queue<Route> queue;
@@ -22,7 +18,7 @@ public abstract class Search {
 
     public Search(int CAPACITY) {
         this.stack = new Stack<>();
-        this.queue = new ArrayBlockingQueue<>(CAPACITY);
+        this.queue = new Queue<>();
     }
 
     public Collection<Route> findSingleAirlineRoute(Airport start, String end) {
@@ -36,7 +32,7 @@ public abstract class Search {
         for (String airline : airLineSet) {
             findSingleAirlineRoute(start, end, airline);
             if (!this.stack.isEmpty())
-                return this.stack;
+                return this.stack.getJavaImplementation();
         }
 
         return null;

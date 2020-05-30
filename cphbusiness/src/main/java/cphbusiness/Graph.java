@@ -7,8 +7,8 @@ import java.util.Set;
 
 public class Graph implements IGraph {
 
-    private Map<String, Airport> airports;
-    private Set<String> airlineCodes;
+    private final Map<String, Airport> airports;
+    private final Set<String> airlineCodes;
     private Airport start;
     private int size;
 
@@ -20,8 +20,8 @@ public class Graph implements IGraph {
     }
 
     @Override
-    public void addRoute(final String fromCode, final String toCode, 
-    final String airline, final float distance, final float time) {
+    public void addRoute(final String fromCode, final String toCode, final String airline, final float distance,
+            final float time) {
 
         Airport from = this.airports.get(fromCode);
         Airport to = this.airports.get(toCode);
@@ -35,13 +35,19 @@ public class Graph implements IGraph {
             airports.put(toCode, to);
         }
 
-        if(this.start == null){
+        if (this.start == null) {
             this.start = from;
         }
         this.airlineCodes.add(airline);
         final Route newRoute = new Route(from, to, airline, distance, time);
         from.addRoute(newRoute);
         size++;
+    }
+
+    @Override
+    public void addAirport(String code, double latitude, double longitude) {
+        this.airports.put(code, new Airport(code, latitude, longitude));
+
     }
 
     /**
@@ -51,18 +57,19 @@ public class Graph implements IGraph {
         return start;
     }
 
-	public Airport getAirport(String string) {
-		return this.airports.get(string);
+    public Airport getAirport(final String string) {
+        return this.airports.get(string);
     }
 
     public Set<String> getAirlineCodes() {
         return airlineCodes;
     }
-    
+
     /**
      * @return the size
      */
     public int getSize() {
         return size;
     }
+
 }
