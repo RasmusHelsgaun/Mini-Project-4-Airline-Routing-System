@@ -1,9 +1,13 @@
-package cphbusiness;
+package cphbusiness.adt;
 
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
+
+import cphbusiness.entity.Airport;
+import cphbusiness.entity.Route;
+import cphbusiness.iface.IGraph;
 
 public class Graph implements IGraph {
 

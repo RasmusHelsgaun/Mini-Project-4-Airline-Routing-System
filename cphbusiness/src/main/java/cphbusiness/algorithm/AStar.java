@@ -1,4 +1,6 @@
-package cphbusiness;
+package cphbusiness.algorithm;
+
+import cphbusiness.entity.Airport;
 
 public class AStar extends Dijkstra {
 
@@ -15,6 +17,6 @@ public class AStar extends Dijkstra {
         double a = Math.pow(Math.sin(dLat / 2),2)
           + Math.pow(Math.sin(dLon / 2),2) * Math.cos(lat1) * Math.cos(lat2);
         double c = 2 * Math.asin(Math.sqrt(a));
-        return R * c;
+        return R * c * 0.8;
     }
 }

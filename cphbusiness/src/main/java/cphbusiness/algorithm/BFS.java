@@ -1,7 +1,10 @@
-package cphbusiness;
+package cphbusiness.algorithm;
 
 import java.util.HashSet;
 import java.util.Set;
+
+import cphbusiness.entity.Airport;
+import cphbusiness.entity.Route;
 
 public class BFS extends Search {
 

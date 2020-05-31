@@ -1,4 +1,4 @@
-package cphbusiness;
+package cphbusiness.entity;
 
 public class Route implements Comparable<Route>{
     private Airport from;

@@ -8,6 +8,11 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
+import cphbusiness.adt.Graph;
+import cphbusiness.algorithm.*;
+import cphbusiness.entity.*;
+import cphbusiness.iface.IFieldGetter;
+
 /**
  * Hello world!
  *
@@ -15,51 +20,7 @@ import java.util.List;
 public class App {
 
     private final static String START = "AER";
-    private final static String END = "CTU";
-
-    public static Graph createGraph() {
-        Graph graph = new Graph();
-
-        String airportsFile = "./data/airports.csv";
-        String line = "";
-        int i = 0;
-        try (BufferedReader br = new BufferedReader(new FileReader(airportsFile))) {
-            while ((line = br.readLine()) != null) {
-                if (i++ == 0)
-                    continue;
-                String[] airport = line.split(";");
-                String code = airport[0];
-                double lat = Double.parseDouble(airport[4]);
-                double lng = Double.parseDouble(airport[5]);
-                graph.addAirport(code, lat, lng);
-            }
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-        String routesFile = "./data/routes.csv";
-
-        line = "";
-        i = 0;
-        try (BufferedReader br = new BufferedReader(new FileReader(routesFile))) {
-            while ((line = br.readLine()) != null) {
-                if (i++ == 0)
-                    continue;
-                String[] route = line.split(";");
-                String from = route[1];
-                String to = route[2];
-                String airline = route[0];
-                float distance = Float.parseFloat(route[3]);
-                float time = Float.parseFloat(route[4]);
-                graph.addRoute(from, to, airline, distance, time);
-            }
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return graph;
-    }
+    private final static String END = "SIN";
 
     public static void main(String[] args) throws IOException {
         Graph graph = createGraph();
@@ -104,10 +65,10 @@ public class App {
 
         class FieldGetterPackage {
             String fieldName;
-            FieldGetter fieldGetter;
+            IFieldGetter fieldGetter;
             String metric;
 
-            public FieldGetterPackage(String fieldName, FieldGetter fieldGetter, String metric) {
+            public FieldGetterPackage(String fieldName, IFieldGetter fieldGetter, String metric) {
                 this.fieldName = fieldName;
                 this.fieldGetter = fieldGetter;
                 this.metric = metric;
@@ -190,6 +151,50 @@ public class App {
             System.out.print(" -> " + route.getTo().getCode());
         }
         System.out.println();
+    }
+
+    public static Graph createGraph() {
+        Graph graph = new Graph();
+
+        String airportsFile = "./data/airports.csv";
+        String line = "";
+        int i = 0;
+        try (BufferedReader br = new BufferedReader(new FileReader(airportsFile))) {
+            while ((line = br.readLine()) != null) {
+                if (i++ == 0)
+                    continue;
+                String[] airport = line.split(";");
+                String code = airport[0];
+                double lat = Double.parseDouble(airport[4]);
+                double lng = Double.parseDouble(airport[5]);
+                graph.addAirport(code, lat, lng);
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        String routesFile = "./data/routes.csv";
+
+        line = "";
+        i = 0;
+        try (BufferedReader br = new BufferedReader(new FileReader(routesFile))) {
+            while ((line = br.readLine()) != null) {
+                if (i++ == 0)
+                    continue;
+                String[] route = line.split(";");
+                String from = route[1];
+                String to = route[2];
+                String airline = route[0];
+                float distance = Float.parseFloat(route[3]);
+                float time = Float.parseFloat(route[4]);
+                graph.addRoute(from, to, airline, distance, time);
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return graph;
     }
 
 }

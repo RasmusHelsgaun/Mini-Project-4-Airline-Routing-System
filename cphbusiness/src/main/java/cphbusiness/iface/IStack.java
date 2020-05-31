@@ -1,4 +1,4 @@
-package cphbusiness;
+package cphbusiness.iface;
 
 import java.util.Stack;
 

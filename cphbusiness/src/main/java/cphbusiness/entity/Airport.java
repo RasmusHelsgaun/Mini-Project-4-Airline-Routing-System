@@ -1,4 +1,4 @@
-package cphbusiness;
+package cphbusiness.entity;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -1,4 +1,7 @@
-package cphbusiness;
+package cphbusiness.algorithm;
+
+import cphbusiness.entity.Airport;
+import cphbusiness.entity.Route;
 
 public class DFS extends Search {
     

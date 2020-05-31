@@ -1,9 +1,14 @@
-package cphbusiness;
+package cphbusiness.algorithm;
 
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+
+import cphbusiness.adt.Queue;
+import cphbusiness.adt.Stack;
+import cphbusiness.entity.Airport;
+import cphbusiness.entity.Route;
 
 
 public abstract class Search {

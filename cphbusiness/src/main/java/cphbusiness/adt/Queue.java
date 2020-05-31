@@ -1,6 +1,8 @@
-package cphbusiness;
+package cphbusiness.adt;
 
 import java.util.concurrent.ArrayBlockingQueue;
+
+import cphbusiness.iface.IQueue;
 
 public class Queue<T> implements IQueue<T> {
     private Node start;

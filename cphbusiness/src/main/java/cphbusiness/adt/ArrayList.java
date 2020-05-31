@@ -1,9 +1,11 @@
 
-package cphbusiness;
+package cphbusiness.adt;
 
 import java.util.Iterator;
 import java.util.List;
 import java.util.NoSuchElementException;
+
+import cphbusiness.iface.IArrayList;
 
 public class ArrayList<T> implements IArrayList<T> {
     private static final int INITIAL_ARRAY_SIZE = 10;

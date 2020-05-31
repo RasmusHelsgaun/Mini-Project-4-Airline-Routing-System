@@ -1,7 +1,11 @@
-package cphbusiness;
+package cphbusiness.algorithm;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import cphbusiness.adt.PriorityQueue;
+import cphbusiness.entity.*;
+import cphbusiness.iface.IFieldGetter;
 
 public class Dijkstra {
     private PriorityQueue<Airport> pq;
@@ -10,7 +14,7 @@ public class Dijkstra {
         this.pq = new PriorityQueue<>();
     }
 
-    public List<Route> findShortestPath(Airport start, Airport end, FieldGetter fieldGetter) {
+    public List<Route> findShortestPath(Airport start, Airport end, IFieldGetter fieldGetter) {
         start.setShortest(0);
         Airport cur = start;
         cur.setHeuristic(getHeuristic(cur, end));

@@ -1,4 +1,4 @@
-package cphbusiness;
+package cphbusiness.iface;
 
 public interface IGraph {
     void addRoute(String fromCode, String toCode, 

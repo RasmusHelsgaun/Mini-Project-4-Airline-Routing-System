@@ -1,10 +1,13 @@
-package cphbusiness;
+package cphbusiness.adt;
+
+import cphbusiness.iface.IArrayList;
+import cphbusiness.iface.IPriorityQueue;
 
 public class PriorityQueue<T extends Comparable<T>> implements IPriorityQueue<T> {
     private IArrayList<T> pq;
     private int N = 0;
 
-    PriorityQueue() {
+    public PriorityQueue() {
         this.pq = new ArrayList<>();
     }
 

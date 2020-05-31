@@ -1,4 +1,4 @@
-package cphbusiness;
+package cphbusiness.iface;
 
 public interface IPriorityQueue<T extends Comparable<T>> {
     void add(T obj);

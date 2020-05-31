@@ -1,4 +1,6 @@
-package cphbusiness;
+package cphbusiness.adt;
+
+import cphbusiness.iface.IStack;
 
 public class Stack<T> implements IStack<T> {
     private Node top;

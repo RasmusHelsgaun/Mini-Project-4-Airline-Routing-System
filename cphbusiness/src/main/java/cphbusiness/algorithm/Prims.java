@@ -1,11 +1,16 @@
-package cphbusiness;
+package cphbusiness.algorithm;
 
 import java.util.List;
+
+import cphbusiness.adt.PriorityQueue;
+import cphbusiness.entity.Airport;
+import cphbusiness.entity.Route;
+
 import java.util.ArrayList;
 
 public class Prims {
     private PriorityQueue<Route> pq;
-
+    
     public Prims() {
         this.pq = new PriorityQueue<>();
     }
