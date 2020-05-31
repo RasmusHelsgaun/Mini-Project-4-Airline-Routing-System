@@ -51,7 +51,7 @@ Shortest path from AER to SIN is 7940.738 km
 -------PATH--------
 AER -> EVN -> IKA -> KUL -> SIN
 ```
-Tweaking and lowering the heuristic to underestimate, resulted in a bit more than 2000 more searches to find the result. However compared to Dijkstra it is still a lot lower.
+Tweaking and lowering the heuristic to underestimate, resulted in a bit more than 2000 more searches to find the result. However compared to Dijkstra it is still a lot less when using A* to find the shortest path. The key to success is therefore an optimistic heuristic.
 
 **Conclusion**   
 Finding a path with A* is immensely faster than using just Dijkstra to find the shortest path, as it knows the general direction of the final destination in the form of a heuristic. In doing so the algorithm makes sure to always search through the vertices closest towards the destination first, to find a path. Using Dijkstra compared to A* is also a balance between computer power, speed and the quality of the path to the destination. Using Dijkstra you can ensure you will get the shortest path possible, however finding it can take a lot more time compared to A*. A* on the other hand will find a path to the destination, but is in some cases not the exact same result as Dijkstra. This is due to A* relying on the heuristic to guide it towards the final destination, making it find the shortest path based on the heuristic. Therefore it is extremely important that the heuristic is correct and not overestimating, as this will lead to the algorithm failing. Tweaking the heuristic to match something that makes sense is therefore vital to the success of A*.
